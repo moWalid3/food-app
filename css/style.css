@@ -1,1 +1,96 @@
-/*# sourceMappingURL=style.css.map */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+body {
+  font-family: "Roboto", sans-serif;
+  color: #a6a6a6;
+  background-color: #202020;
+}
+body span:has(svg) {
+  cursor: pointer;
+  color: #797979;
+  font-size: 1.25rem;
+  transition: 0.3s;
+}
+body span:has(svg):hover {
+  color: #909090;
+}
+body a {
+  text-decoration: none;
+}
+body .overlay {
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transition: 0.3s;
+  background-color: rgba(233, 233, 233, 0.8);
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+}
+body .section-padding {
+  padding: 10rem 10rem 5rem;
+}
+
+nav {
+  transition: 0.7s;
+  left: 0;
+  z-index: 9999;
+}
+nav .tab-nav {
+  background-color: #202020;
+}
+nav .tab-nav ul li {
+  margin-bottom: 1.5rem;
+  position: relative;
+  top: 0;
+}
+nav .tab-nav ul li a {
+  color: #d2d2d2;
+  font-size: 1.125rem;
+  transition: 0.3s;
+}
+nav .tab-nav ul li a:hover {
+  color: #bcbcbc;
+}
+nav .nav-header {
+  background-color: #e9e9e9;
+}
+nav .nav-header img {
+  width: 3.5rem;
+}
+nav .nav-header span {
+  font-size: 1.375rem;
+  color: #202020;
+}
+nav .nav-header span:hover {
+  color: #4d4d4d;
+}
+
+.meals-section .item {
+  cursor: pointer;
+}
+.meals-section .item .overlay h3 {
+  color: #202020;
+  font-weight: 600;
+  font-size: 2.5rem;
+}
+.meals-section .item:hover .overlay {
+  bottom: 0;
+}
+
+.search-section input {
+  background-color: 0.3s;
+  border-bottom: 1px solid #FFD100 !important;
+  color: #d2d2d2 !important;
+  font-size: 1.125rem;
+}
+.search-section input::placeholder {
+  text-align: center;
+  color: #909090;
+  opacity: 1;
+  transition: 0.3s;
+}
+.search-section input:focus::placeholder {
+  opacity: 0;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,37 @@
+nav {
+  transition: .7s;
+  left: 0;
+  z-index: 9999;
+  .tab-nav {
+    background-color: $dark;
+    ul {
+      li {
+        margin-bottom: 1.5rem;
+        position: relative;
+        top: 0;
+        a {
+          color: $title-color;
+          font-size: $fs-18;
+          transition: $transition;
+          &:hover {
+            color: $title-color-alt;
+          }
+        }
+      }
+    }
+  }
+  .nav-header {
+    background-color: $light;
+    img {
+      width: 3.5rem;
+    }
+    span {
+      font-size: $fs-22;
+      color: $dark;
+      &:hover {
+        color: $dark-hover;
+      }
+      
+    }
+  }
+}

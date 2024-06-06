@@ -1,0 +1,19 @@
+.search-section {
+  input {
+    background-color: $transition;
+    border-bottom: 1px solid $yellow !important;
+    color: $title-color !important;
+    font-size: $fs-18;
+    &::placeholder {
+      text-align: center;
+      color: $text-color-alt ;
+      opacity: 1;
+      transition: $transition;
+    }
+    &:focus {
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+  }
+}
