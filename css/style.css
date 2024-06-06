@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap");
 body {
   font-family: "Roboto", sans-serif;
   color: #a6a6a6;
@@ -24,12 +25,58 @@ body .overlay {
   width: 100%;
   transition: 0.3s;
   background-color: rgba(233, 233, 233, 0.8);
-  display: flex;
-  align-items: flex-end;
-  padding: 2rem;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 body .section-padding {
-  padding: 10rem 10rem 5rem;
+  padding: 2rem calc(11rem - 72px) 5rem 11rem;
+}
+@media (max-width: 1199px) {
+  body .section-padding {
+    padding: 2rem calc(10rem - 72px) 5rem 10rem;
+  }
+}
+@media (max-width: 575.98px) {
+  body .section-padding {
+    padding: 2rem calc(5.25rem - 72px) 5rem 5.25rem;
+  }
+}
+body h2 {
+  color: #d2d2d2;
+}
+body .btn {
+  transition: 0.3s;
+}
+body h1 {
+  font-family: "Bungee Spice", sans-serif;
+  font-size: 5rem;
+  margin-bottom: 3rem;
+  letter-spacing: 0.5rem;
+}
+@media (max-width: 991px) {
+  body h1 {
+    font-size: 4rem;
+    letter-spacing: 6px;
+  }
+}
+@media (max-width: 767px) {
+  body h1 {
+    font-size: 3.5rem;
+    letter-spacing: 0.25rem;
+  }
+  body h1.cat-head {
+    font-size: 3rem;
+  }
+}
+@media (max-width: 575.98px) {
+  body h1 {
+    font-size: 3rem;
+  }
+  body h1.cat-head {
+    font-size: 2rem;
+    letter-spacing: 1px;
+  }
 }
 
 nav {
@@ -67,20 +114,30 @@ nav .nav-header span:hover {
   color: #4d4d4d;
 }
 
-.meals-section .item {
+.main-section .item {
   cursor: pointer;
 }
-.meals-section .item .overlay h3 {
+.main-section .item .overlay h3 {
   color: #202020;
   font-weight: 600;
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
-.meals-section .item:hover .overlay {
+.main-section .item .overlay p {
+  color: #363636;
+  font-weight: 500;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.main-section .item:hover .overlay {
   bottom: 0;
+}
+.main-section .item.area-item span {
+  color: #FFD100;
+  opacity: 0.7;
 }
 
 .search-section input {
-  background-color: 0.3s;
   border-bottom: 1px solid #FFD100 !important;
   color: #d2d2d2 !important;
   font-size: 1.125rem;
@@ -93,4 +150,26 @@ nav .nav-header span:hover {
 }
 .search-section input:focus::placeholder {
   opacity: 0;
+}
+
+.contact-section input {
+  color: #a6a6a6;
+  color: #d2d2d2 !important;
+  font-size: 1.125rem;
+}
+.contact-section input.unfocus {
+  border-bottom: 1px solid #FFD100 !important;
+  box-shadow: 0rem 0.25rem 0.25rem 0px rgba(255, 209, 0, 0.2) !important;
+}
+.contact-section input::placeholder {
+  text-align: center;
+  color: #909090;
+  opacity: 1;
+  transition: 0.3s;
+}
+.contact-section input:focus::placeholder {
+  opacity: 0;
+}
+.contact-section input[type=number]:hover[type=number]::-webkit-outer-spin-button, .contact-section input[type=number]:hover[type=number]::-webkit-inner-spin-button, .contact-section input[type=number]:focus[type=number]::-webkit-outer-spin-button, .contact-section input[type=number]:focus[type=number]::-webkit-inner-spin-button {
+  opacity: 0.2;
 }/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,32 @@
+.main-section {
+  .item {
+    cursor: pointer;
+    .overlay {
+      h3 {
+        color: $dark;
+        font-weight: $fw-600;
+        font-size: 2rem;
+      }
+      p {
+        color: $dark-alt;
+        font-weight: $fw-500;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    &:hover {
+      .overlay {
+        bottom: 0;
+      }
+    }
+    
+    &.area-item {
+
+      span {
+        color: $yellow;
+        opacity: .7;
+      }
+    }
+  }
+}

@@ -16,11 +16,12 @@
         class="tab-nav min-vh-100 px-4 py-5 d-flex flex-column justify-content-between"
       >
         <ul class="list-unstyled overflow-hidden h-50">
-          <li><a href="">Search</a></li>
-          <li><a href="">Categories</a></li>
-          <li><a href="">Area</a></li>
-          <li><a href="">Ingredients</a></li>
-          <li><a href="">Contact Us</a></li>
+          <li><a id="meals" href="">Meals</a></li>
+          <li><a id="categories" href="">Categories</a></li>
+          <li><a id="ingredients" href="">Ingredients</a></li>
+          <li><a id="search" href="">Search</a></li>
+          <li><a id="area" href="">Area</a></li>
+          <li><a id="contact" href="">Contact Us</a></li>
         </ul>
         <div>
           <div class="links mb-2">
@@ -36,7 +37,7 @@
       <div
         class="nav-header min-vh-100 d-flex flex-column justify-content-between py-4 px-2 text-center"
       >
-        <a href="#"><img src="images/logo.png" alt="" /></a>
+        <a id="logo" href="#"><img src="images/logo.png" alt="" /></a>
         <div class="toggler-icon">
           <span><i class="fa-solid fs-2 fa-align-justify"></i></span>
           <span class="d-none"><i class="fa-solid fs-1 fa-xmark"></i></span>
@@ -47,6 +48,24 @@
         </div>
       </div>
     </nav>
+
+    <main class="main-section section-padding  container-fluid">
+      <!-- <h1 class="text-center text-uppercase">Meals</h1>
+      <div class="row g-5">
+        <div class="col-3">
+            <div class="item position-relative overflow-hidden rounded-1">
+              <img
+                class="img-fluid"
+                src="https://www.themealdb.com/images/media/meals/58oia61564916529.jpg"
+                alt=""
+              />
+              <div class="overlay">
+                <h3>Cobra</h3>
+              </div>
+            </div>
+        </div>
+      </div> -->
+    </main>
 
     <!-- <section class="meals-section section-padding container-fluid">
       <div class="row g-5">
@@ -124,9 +143,51 @@
       </div>
     </section> -->
 
-    <section class="contact-section container-fluid">
-      <!-- complete from here... -->
-    </section>
+    <!-- <section class="contact-section  container-fluid section-padding">
+      <h2 class="h1 mb-5 text-center">Contact Us</h2>
+      <form class="row gx-4 gy-4 px-5 mx-auto">
+        <div class="col-md-6">
+          <input type="text" id="name" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Enter Your Name"  required>
+          <div class="invalid-feedback">
+            Enter Valid Name.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <input type="email" id="email" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Your Email"  required>
+          <div class="invalid-feedback">
+            Enter Valid Email.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <input type="tel" id="phone" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Your Phone"  required>
+          <div class="invalid-feedback">
+            Enter Valid Phone.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <input type="number" id="age" min="1" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Enter Your Age"  required>
+          <div class="invalid-feedback">
+            Enter Valid Age.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <input type="password" id="password" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Enter Password"  required>
+          <div class="invalid-feedback">
+            Password Must Contain at lest 5 character.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <input type="password" id="repassword" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Enter RePassword"  required>
+          <div class="invalid-feedback">
+            Enter the same password again.
+          </div>
+        </div>
+
+        <div class="col-12 text-center">
+          <button id="submit" class="btn btn-outline-warning disabled mt-2" type="submit">Submit</button>
+        </div>
+      </form>
+    </section> -->
 
     <script src="js/all.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>

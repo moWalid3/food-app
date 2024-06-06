@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
 
 body {
   font-family: "Roboto", sans-serif;
@@ -29,12 +30,54 @@ body {
     width: 100%;
     transition: $transition;
     background-color: rgba($color: $light, $alpha: 0.8);
-    display: flex;
-    align-items: flex-end;
-    padding: 2rem;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .section-padding {
-    padding: 10rem 10rem 5rem;
+    padding: 2rem calc(11rem - 72px) 5rem 11rem;
+    @media (max-width: 1199px) {
+      padding: 2rem calc(10rem - 72px) 5rem 10rem;
+    }
+    @media (max-width: 575.98px) { 
+      padding: 2rem calc(5.25rem - 72px) 5rem 5.25rem;
+    }
   }
+
+
+  h2 {
+    color: $title-color;
+  }
+
+  .btn {
+    transition: $transition;
+  }
+
+  h1 {
+    font-family: "Bungee Spice", sans-serif;
+    font-size: 5rem;
+    margin-bottom: 3rem;
+    letter-spacing: .5rem;
+    @media (max-width: 991px) {
+      font-size: 4rem;
+      letter-spacing: 6px;
+    }
+    @media (max-width:767px) {
+      font-size: 3.5rem;
+      letter-spacing: .25rem;
+      &.cat-head {
+        font-size: 3rem;
+      }
+      }
+      @media (max-width: 575.98px) { 
+        font-size: 3rem;
+        &.cat-head {
+          font-size: 2rem;
+          letter-spacing: 1px;
+        }
+      }
+
+  }
+
 }

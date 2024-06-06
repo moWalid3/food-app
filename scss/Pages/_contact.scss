@@ -1,0 +1,31 @@
+.contact-section {
+  input {
+    color: $text-color;
+    color: $title-color !important;
+    font-size: $fs-18;
+    &.unfocus {
+      border-bottom: 1px solid $yellow !important;
+      box-shadow: 0rem 0.25rem 0.25rem 0px rgba($color: $yellow, $alpha: 0.2) !important;
+    }
+    &::placeholder {
+      text-align: center;
+      color: $text-color-alt;
+      opacity: 1;
+      transition: $transition;
+    }
+    &:focus {
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+
+    &[type="number"]:hover, 
+    &[type="number"]:focus {
+      &[type="number"]::-webkit-outer-spin-button,
+      &[type="number"]::-webkit-inner-spin-button {    
+        opacity: .2;
+      }
+    }
+
+  }
+}
