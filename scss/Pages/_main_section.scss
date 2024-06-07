@@ -22,10 +22,33 @@
     }
     
     &.area-item {
-
+      background-color: #1d1d1d;
       span {
         color: $yellow;
-        opacity: .7;
+        opacity: .5;
+      }
+      &:hover {
+        span {
+          opacity: 1;
+        }
+      }
+    }
+    
+    &.ing-item {
+      h3 {
+        color: $title-color;
+      }
+      p {
+        font-weight: 300;
+      }
+      span {
+        color: $yellow;
+        opacity: .5;
+      }
+      &:hover {
+        span {
+          opacity: 1;
+        }
       }
     }
   }

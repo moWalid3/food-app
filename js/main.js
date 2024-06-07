@@ -109,22 +109,21 @@ function checkValidation (){
 }
 
 
-//////////// display meals 
+//////////// main side
 
 let main = document.querySelector("main");
 
-// searchByName();
+searchByName();
 
 async function searchByName(name = "") {
   let res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`)
   res = await res.json();
-  console.log(res.meals);
-  displayMeals(res.meals);
+  displayMeals(res.meals, "Daily Meals");
 }
 
-function displayMeals(meals) {
+function displayMeals(meals, head) {
   let box = `
-    <h1 class="text-center text-uppercase">Meals</h1>
+    <h1 class="text-center text-uppercase">${head}</h1>
       <div class="row g-4">
   `;
   for(let i = 0; i < meals.length; i++) {
@@ -132,7 +131,7 @@ function displayMeals(meals) {
         <div class="col-xsm-6 col-md-6 col-lg-4 col-xl-3">
             <div class="item position-relative overflow-hidden rounded-1">
               <img
-                class="img-fluid"
+                class="img-fluid w-100"
                 src="${meals[i].strMealThumb}"
               />
               <div class="overlay p-4 d-flex align-items-end">
@@ -162,13 +161,13 @@ function displayCategories() {
     for(let i = 0; i < categories.length; i++) {
       box += `    
           <div class="col-xsm-6 col-md-6 col-lg-4 col-xl-3">
-              <div class="item text-center position-relative overflow-hidden rounded-1">
+              <div onclick="getCategoryMeals('${categories[i].strCategory}')" class="item text-center position-relative overflow-hidden rounded-1">
                 <img
                   class="img-fluid"
                   src="${categories[i].strCategoryThumb}"
                 />
                 <div class="overlay d-flex flex-column justify-content-center p-2 pt-3">
-                  <h3 class="mb-1" >${categories[i].strCategory}</h3>
+                  <h3 class="mb-1 fs-4" >${categories[i].strCategory}</h3>
                   <p>${categories[i].strCategoryDescription.toString().split(" ").slice(0, 10).join(" ")}...</p>
                 </div>
               </div>
@@ -179,8 +178,9 @@ function displayCategories() {
     box += `</div>`;
     main.innerHTML = box;
   })
+
 }
-displayArea();
+
 function displayArea() {
   fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
   .then(res => res.json())
@@ -196,9 +196,38 @@ function displayArea() {
     for(let i = 0; i < meals.length; i++) {
       box += `    
           <div class="col-xsm-6 col-md-6 col-lg-4 col-xl-3">
-              <div class="item area-item text-center position-relative overflow-hidden rounded-1">
+              <div onclick="getAreaMeals('${meals[i].strArea}')" class="item p-3 area-item text-center position-relative overflow-hidden rounded-1">
                 <span ><i class="fa-solid fa-3x fa-city"></i></span>
-                <h3 class="mt-2" >${meals[i].strArea}</h3>
+                <h3 class="mt-2 mb-0" >${meals[i].strArea}</h3>
+              </div>
+          </div>
+      `;
+    }
+
+    box += `</div>`;
+    main.innerHTML = box;
+  })
+}
+
+function displayIngredients() {
+  fetch("https://www.themealdb.com/api/json/v1/1/list.php?i=list")
+  .then(res => res.json())
+  .then(data => data.meals)
+  .then(meals => {
+    meals.length = 20;
+    
+    let box = `
+    <h1 class="text-center ing-head text-uppercase">Ingredients</h1>
+      <div class="row g-4 ">
+    `;
+  
+    for(let i = 0; i < meals.length; i++) {  
+      box += `    
+          <div class="col-xsm-6 col-md-6 col-lg-4 col-xl-3">
+              <div onclick="getIngredientsMeals('${meals[i].strIngredient}')" class="item p-3 ing-item text-center position-relative overflow-hidden rounded-1">
+                <span ><i class="fa-solid fa-3x fa-cookie-bite"></i></span>
+                <h3 class="mt-2 mb-2" >${meals[i].strIngredient}</h3>
+                <p class="mb-0">${meals[i].strDescription.split(" ").slice(0, 15).join(" ")}...</p>
               </div>
           </div>
       `;
@@ -210,16 +239,47 @@ function displayArea() {
 }
 
 
+async function getCategoryMeals(categoryName) {
+  let res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`)
+  res = await res.json();
+  displayMeals(res.meals, categoryName);
+}
+
+async function getAreaMeals(area) {
+  let res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`)
+  res = await res.json();
+  displayMeals(res.meals, area);
+}
+
+async function getIngredientsMeals(name) {
+  let res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${name}`)
+  res = await res.json();
+  displayMeals(res.meals, name);
+}
+
+
 ////////  customize transformation
 document.querySelectorAll("nav ul a").forEach((link)=> {
   link.addEventListener("click", (e)=> {
     e.preventDefault();
+
     if(link.getAttribute("id") == "meals") {
+
       searchByName();
+
     } else if (link.getAttribute("id") == "categories") {
+
       displayCategories();
+    
+
     } else if (link.getAttribute("id") == "area") {
+
       displayArea();
+
+    } else if (link.getAttribute("id") == "ingredients") {
+      
+      displayIngredients();
+
     }
   })
 })
