@@ -20,12 +20,12 @@
         bottom: 0;
       }
     }
-    
+
     &.area-item {
       background-color: #1d1d1d;
       span {
         color: $yellow;
-        opacity: .5;
+        opacity: 0.5;
       }
       &:hover {
         span {
@@ -33,7 +33,7 @@
         }
       }
     }
-    
+
     &.ing-item {
       h3 {
         color: $title-color;
@@ -43,12 +43,40 @@
       }
       span {
         color: $yellow;
-        opacity: .5;
+        opacity: 0.5;
       }
       &:hover {
         span {
           opacity: 1;
         }
+      }
+    }
+  }
+
+  .meal-details {
+    h1 {
+      letter-spacing: 1px;
+    }
+    h3 {
+      color: $title-color;
+    }
+    button a {
+      color: $light;
+    }
+    .recipes,
+    .tags {
+      span:not(.semicolon) {
+        background-color: #636363;
+        color: $light;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        height: fit-content;
+      }
+    }
+    .tags {
+      span {
+        background-color: $dark-alt !important;
+        color: $title-color !important;
       }
     }
   }

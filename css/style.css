@@ -150,6 +150,27 @@ nav .nav-header span:hover {
 .main-section .item.ing-item:hover span {
   opacity: 1;
 }
+.main-section .meal-details h1 {
+  letter-spacing: 1px;
+}
+.main-section .meal-details h3 {
+  color: #d2d2d2;
+}
+.main-section .meal-details button a {
+  color: #e9e9e9;
+}
+.main-section .meal-details .recipes span:not(.semicolon),
+.main-section .meal-details .tags span:not(.semicolon) {
+  background-color: #636363;
+  color: #e9e9e9;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  height: fit-content;
+}
+.main-section .meal-details .tags span {
+  background-color: #363636 !important;
+  color: #d2d2d2 !important;
+}
 
 .search-section input {
   border-bottom: 1px solid #FFD100 !important;

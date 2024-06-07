@@ -129,7 +129,7 @@ function displayMeals(meals, head) {
   for(let i = 0; i < meals.length; i++) {
     box += `    
         <div class="col-xsm-6 col-md-6 col-lg-4 col-xl-3">
-            <div class="item position-relative overflow-hidden rounded-1">
+            <div onclick="displayMealDetails(${meals[i].idMeal})" class="item position-relative overflow-hidden rounded-1">
               <img
                 class="img-fluid w-100"
                 src="${meals[i].strMealThumb}"
@@ -257,11 +257,78 @@ async function getIngredientsMeals(name) {
   displayMeals(res.meals, name);
 }
 
+function displayMealDetails(id) {
+  fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+  .then(res => res.json())
+  .then(data => data.meals[0])
+  .then(meal => {
+    
+    let recipes = "";
+    let tags = "";
+
+    if(meal.strTags == null) {
+      tags += `<p class="mb-0 h5 fw-light">There are no tags</p>`;
+    } else {
+      for (const tag of meal.strTags.split(",")) {
+        tags += `<span>${tag}</span>`
+      }
+    }
+
+    let i = 1;
+    while (meal[`strIngredient${i}`] != 0) {
+      recipes += `<span>${meal[`strMeasure${i}`]} ${meal[`strIngredient${i}`]}</span>`
+      i++;
+    }
+
+    let box = `
+      <div class="row meal-details pt-5">
+        <div class="col-lg-4">
+          <img
+            class="img-fluid w-100 rounded-1"
+            src="${meal.strMealThumb}"
+          />
+          <h1 class="mt-2 mb-4 h2">${meal.strMeal}</h1>
+        </div>
+        <div class="col-lg-8">
+          <h3>Instructions</h3>
+          <p class="mb-3">${meal.strInstructions}</p>
+          <div class="d-flex align-items-center mb-3">
+            <h3 class="mb-0">Area :</h3>
+            <p class="mb-0 ms-2 h5 fw-light">${meal.strArea}</p>
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <h3 class="mb-0">Category :</h3>
+            <p class="mb-0 ms-2 h5 fw-light">${meal.strCategory}</p>
+          </div>
+          <div class="mb-4 recipes d-flex">
+            <h3  class="me-2 pe-2 mb-0">Recipes<span class="ms-2 semicolon">:</span></h3>
+            <div class="d-flex gap-2 flex-wrap">
+              ${recipes}
+            </div>
+          </div>
+          <div class="mb-4 d-flex align-items-center gap-2 flex-wrap tags">
+            <h3 class="mb-0 me-2">Tags :</h3>
+            ${tags}
+          </div>
+          <button class="btn btn-success me-2">
+            <a href="${meal.strSource}" target="_blank">Source</a>
+          </button>
+          <button class="btn btn-danger">
+            <a href="${meal.strYoutube}" target="_blank">Youtube</a>
+          </button>
+        </div>
+      </div>
+    `
+
+    main.innerHTML = box;
+  })
+}
 
 ////////  customize transformation
 document.querySelectorAll("nav ul a").forEach((link)=> {
   link.addEventListener("click", (e)=> {
     e.preventDefault();
+    closeSideNav();
 
     if(link.getAttribute("id") == "meals") {
 
