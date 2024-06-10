@@ -1,10 +1,39 @@
 ///
 ///
 
+let spinner = document.querySelector(".spinner");
 let nav = document.querySelector("nav");
 let tabNav = document.querySelector(".tab-nav");
 let tabNavLinks = [...tabNav.querySelectorAll("li")];
 let togglerIcon = document.querySelector(".toggler-icon");
+let main = document.querySelector("main");
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  startSpinner ();
+  closeSideNav();
+  searchByName("","Daily Meals");
+})
+
+function startSpinner () {
+  spinner.classList.replace("d-none", "d-flex");
+  document.body.style.overflow = "hidden";
+  setTimeout(() => {
+    spinner.classList.replace("d-flex", "d-none");
+    document.body.style.overflow = "auto";
+  }, 500);
+}
+
+function sectionSpinner () {
+  spinner.classList.replace("d-none", "d-flex");
+  spinner.style.left = "72px";
+  spinner.style.zIndex = 11;
+  document.body.style.overflow = "hidden";
+  setTimeout(() => {
+    spinner.classList.replace("d-flex", "d-none");
+    document.body.style.overflow = "auto";
+  }, 250);
+}
 
 
 function openSideNav() {
@@ -17,8 +46,6 @@ function openSideNav() {
     tabNavLinks[i].style.transition = `${400+(i*200)}ms`;
   }
 }
-
-closeSideNav();
 
 function closeSideNav() {
   let tabNavWidth = getComputedStyle(tabNav).width;
@@ -46,79 +73,13 @@ togglerIcon.addEventListener("click", () => {
 
 });
 
-/////////// contact form validation
-
-let contactInputs = document.querySelectorAll(".contact-section input");
-
-contactInputs.forEach(input => {
-
-  input.addEventListener("focus",()=> {
-    input.classList.remove("unfocus","border-0");
-    if(!validationForm(input)) {
-      input.classList.add("is-invalid");
-    }
-  })
-
-  input.addEventListener("input",()=> {
-    if(validationForm(input)) {
-      input.classList.remove("is-invalid")
-      input.classList.add("is-valid")
-    } else {
-      input.classList.add("is-invalid")
-      input.classList.remove("is-valid")
-    }
-
-    if(checkValidation()) {
-      document.querySelector("#submit").classList.remove("disabled");
-    } else {
-      document.querySelector("#submit").classList.add("disabled");
-    }
-  })
-
-})
-
-function validationForm (input) {
-  let id = input.getAttribute("id");
-  if( id == "name" || id == "age" || id == "phone") {
-
-    return (input.value.length >= 1);
-
-  } else if (id == "email") {
-
-    let reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-    return reg.test(input.value);
-
-  } else if (id == "password" ) {
-
-    return (input.value.length >= 5);
-
-  } else if (id == "repassword") {
-
-    let passInput =  document.querySelector("#password");
-    if(input.value == passInput.value && passInput.classList.contains("is-valid")) {
-      return true;
-    }
-
-  }
-
-  return false;
-}
-
-function checkValidation (){
-  return [...contactInputs].every(input => input.classList.contains("is-valid"));
-}
-
 
 //////////// main side
 
-let main = document.querySelector("main");
-
-searchByName();
-
-async function searchByName(name = "") {
+async function searchByName(name = "", head = "") {
   let res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`)
   res = await res.json();
-  displayMeals(res.meals, "Daily Meals");
+  displayMeals(res.meals, head);
 }
 
 function displayMeals(meals, head) {
@@ -126,7 +87,7 @@ function displayMeals(meals, head) {
     <h1 class="text-center text-uppercase">${head}</h1>
       <div class="row g-4">
   `;
-  for(let i = 0; i < meals.length; i++) {
+  for(let i = 0; i < meals?.length; i++) {
     box += `    
         <div class="col-xsm-6 col-md-6 col-lg-4 col-xl-3">
             <div onclick="displayMealDetails(${meals[i].idMeal})" class="item position-relative overflow-hidden rounded-1">
@@ -147,6 +108,7 @@ function displayMeals(meals, head) {
 
 
 function displayCategories() {
+  sectionSpinner();
   fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
   .then(res => res.json())
   .then(data => data.categories)
@@ -240,24 +202,30 @@ function displayIngredients() {
 
 
 async function getCategoryMeals(categoryName) {
+  sectionSpinner();
   let res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`)
   res = await res.json();
   displayMeals(res.meals, categoryName);
 }
 
 async function getAreaMeals(area) {
+  sectionSpinner();
   let res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`)
   res = await res.json();
   displayMeals(res.meals, area);
 }
 
 async function getIngredientsMeals(name) {
+  sectionSpinner();
   let res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${name}`)
   res = await res.json();
   displayMeals(res.meals, name);
 }
 
 function displayMealDetails(id) {
+  sectionSpinner();
+  document.querySelector(".search-section").innerHTML = "";
+
   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
   .then(res => res.json())
   .then(data => data.meals[0])
@@ -324,34 +292,198 @@ function displayMealDetails(id) {
   })
 }
 
+
+function searchSection() {
+
+  main.innerHTML = "";
+
+  document.querySelector(".search-section").innerHTML = `
+    <div class=" section-padding pt-5 pb-0  container-fluid  d-flex flex-column flex-md-row gap-4">
+      <input oninput="searchByName(this.value)" id="searchByName" type="text" class="form-control shadow-none bg-transparent border-0" placeholder="Search By Name">
+      <input oninput="searchByFirstLetter(this.value)" maxlength="1" type="text" class="form-control shadow-none bg-transparent border-0" placeholder="Search By First Letter...">
+    </div>
+  `;
+}
+
+function searchByFirstLetter(name) {
+  fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${name}`)
+  .then(res => res.json())
+  .then(data => displayMeals(data.meals, "") );
+}
+
+
+function displayContact() {
+  main.innerHTML = `
+      <h1 class="mb-5 text-center">Contact Us</h1>
+        <form class="row contact-section gx-4 gy-4  mx-auto">
+          <div class="col-md-6">
+            <input type="text" id="name" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Enter Your Name"  required>
+            <div class="invalid-feedback">
+              Enter Valid Name.
+            </div>
+          </div>
+          <div class="col-md-6">
+            <input type="email" id="email" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Your Email"  required>
+            <div class="invalid-feedback">
+              Enter Valid Email.
+            </div>
+          </div>
+          <div class="col-md-6">
+            <input type="tel" id="phone" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Your Phone"  required>
+            <div class="invalid-feedback">
+              Enter Valid Phone.
+            </div>
+          </div>
+          <div class="col-md-6">
+            <input type="number" id="age" min="1" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Enter Your Age"  required>
+            <div class="invalid-feedback">
+              Enter Valid Age.
+            </div>
+          </div>
+          <div class="col-md-6">
+            <input type="password" id="password" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Enter Password"  required>
+            <div class="invalid-feedback">
+              Password Must Contain at lest 5 character.
+            </div>
+          </div>
+          <div class="col-md-6">
+            <input type="password" id="repassword" class="form-control py-2 border-0 unfocus bg-transparent shadow-none" placeholder="Enter RePassword"  required>
+            <div class="invalid-feedback">
+              Enter the same password again.
+            </div>
+          </div>
+  
+          <div class="col-12 text-center">
+            <button id="submit" class="btn btn-outline-warning disabled mt-2" type="submit">Submit</button>
+          </div>
+        </form>
+  `
+
+  startValidation ();
+}
+
+/////////// contact form validation
+
+function startValidation () {
+  let contactInputs = document.querySelectorAll(".contact-section input");
+
+  contactInputs.forEach(input => {
+
+    input.addEventListener("focus",()=> {
+      input.classList.remove("unfocus","border-0");
+      if(!validationForm(input)) {
+        input.classList.add("is-invalid");
+      }
+    })
+
+    input.addEventListener("input",()=> {
+
+      if(validationForm(input)) {
+        input.classList.replace("is-invalid", "is-valid");
+        } else {
+        input.classList.replace("is-valid", "is-invalid");
+      }
+
+      if(checkValidation()) {
+        document.querySelector("#submit").classList.remove("disabled");
+      } else {
+        document.querySelector("#submit").classList.add("disabled");
+      }
+
+    })
+
+  })
+}
+
+function validationForm (input) {
+  let id = input.getAttribute("id");
+
+  if( id == "name" ) {
+
+    let reg = /^[a-zA-Z\s-]+$/;
+    return reg.test(input.value);
+
+  } else if (id == "email") {
+
+    let reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    return reg.test(input.value);
+
+  } else if (id == "phone" ) {
+
+    let reg = /^(1[ -]?)?\d{3}[ -]?\d{3}[ -]?\d{4}$/;
+    return reg.test(input.value);
+    
+  } else if (id == "age" ) {
+
+    let reg = /^\S[0-9]{0,1}$/;
+    return reg.test(input.value);
+
+  } else if (id == "password" ) {
+
+    return (input.value.length >= 5);
+
+  } else if (id == "repassword") {
+
+    let passInput =  document.querySelector("#password");
+    if(input.value == passInput.value && passInput.classList.contains("is-valid")) {
+      return true;
+    }
+
+  }
+
+  return false;
+}
+
+function checkValidation (){
+  let contactInputs = document.querySelectorAll(".contact-section input");
+  return [...contactInputs].every(input => input.classList.contains("is-valid"));
+}
+
+
 ////////  customize transformation
 document.querySelectorAll("nav ul a").forEach((link)=> {
   link.addEventListener("click", (e)=> {
-    e.preventDefault();
-    closeSideNav();
+    commonActionAtLinkClick(e);
 
-    if(link.getAttribute("id") == "meals") {
+    let id = link.getAttribute("id");
 
-      searchByName();
-
-    } else if (link.getAttribute("id") == "categories") {
-
-      displayCategories();
+    switch (id) {
+      case "meals":
+        searchByName("", "Daily Meals");
+        break;
+      case "categories":
+        displayCategories();
+        break;
+      case "area":
+        displayArea();
+        break;
+      case "ingredients":
+        displayIngredients();
+        break;
+      case "search":
+        searchSection();
+        break;
+      case "contact":
+        displayContact();
+        break;
     
-
-    } else if (link.getAttribute("id") == "area") {
-
-      displayArea();
-
-    } else if (link.getAttribute("id") == "ingredients") {
-      
-      displayIngredients();
-
+      default:
+        break;
     }
+
   })
 })
 
 document.querySelector("#logo").addEventListener("click", (e)=> {
-  e.preventDefault();
-  searchByName();
+  searchByName("", "Daily Meals");
+  commonActionAtLinkClick(e);
 })
+
+function commonActionAtLinkClick(e) {
+  e.preventDefault();
+  closeSideNav();
+  sectionSpinner();
+  document.querySelector(".search-section").innerHTML = "";
+}
+
+main.addEventListener("click",() => closeSideNav());
