@@ -48,7 +48,8 @@ function openSideNav() {
 }
 
 function closeSideNav() {
-  let tabNavWidth = getComputedStyle(tabNav).width;
+  // let tabNavWidth = getComputedStyle(tabNav).width;
+  let tabNavWidth = "317.8px";
   nav.style.left = `-${tabNavWidth}`;
   togglerIcon.firstElementChild.classList.remove("d-none");
   togglerIcon.lastElementChild.classList.add("d-none");
